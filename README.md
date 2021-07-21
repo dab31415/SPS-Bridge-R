@@ -1,2 +1,2 @@
 # SPS-Bridge-R
- R Coursework for SPS Bridge Program
+ R Coursework for CUNY SPS Bridge Program
