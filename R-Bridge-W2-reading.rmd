@@ -1,0 +1,55 @@
+---
+title: "W2 Reading"
+author: "Donald Butler"
+date: "7/27/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Imports
+```{r}
+require(ggplot2)
+require(plyr)
+data(baseball)
+data(diamonds)
+
+```
+
+### Functions
+
+```{r}
+obp <- function(data) {
+  c(OBP = with(data,sum(h + bb + hbp)/sum(ab + bb + hbp + sf)))
+}
+```
+
+## Including Plots
+```{r agregate}
+aggregate(price ~ cut, diamonds, each(mean, median))
+```
+
+## plyr
+
+```{r}
+
+baseball$sf[baseball$year < 1954] <- 0
+baseball$hbp[is.na(baseball$hbp)] <- 0
+baseball <- baseball[baseball$ab >= 50, ]
+baseball$OBP <- with(baseball, (h + bb + hbp)/(ab + bb + hbp + sf))
+
+careerOBP <- ddply(baseball, .variables = 'id', .fun = obp)
+careerOBP <- careerOBP[order(careerOBP$OBP, decreasing = TRUE), ]
+head(careerOBP)
+
+
+baseball[baseball$hr >= 50, ]
+
+
+
+
+
+```
+

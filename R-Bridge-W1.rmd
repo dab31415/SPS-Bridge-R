@@ -3,8 +3,8 @@ title: "R Bridge Week 1 Assignment"
 author: "Donald Butler"
 date: "7/20/2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
