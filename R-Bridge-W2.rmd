@@ -2,29 +2,80 @@
 title: "R Bridge Week 2 Assignment"
 author: "Donald Butler"
 date: "7/30/2021"
-output: pdf_document
+output:
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Select a random dataset
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+US Macroeconomic Data (1957–2005, Stock \& Watson)
+  https://vincentarelbundock.github.io/Rdatasets/doc/AER/USMacroSW.html
+  https://vincentarelbundock.github.io/Rdatasets/csv/AER/USMacroSW.csv
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r load_data}
+# github csv location
+csvfile <- 'https://raw.githubusercontent.com/dab31415/SPS-Bridge-R/main/USMacroSW.csv'
 
-```{r cars}
-summary(cars)
+df <- read.csv(csvfile)
+df$year <- 1957 + floor((df[1]-1)/4)
+df$qtr <- ((df[1]-1) %% 4) + 1
 ```
 
-## Including Plots
+## Exercise #1.
 
-You can also embed plots, for example:
+Use the summary function to gain an overview of the data set. Then display the mean and median for at least two attributes.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r summary}
+summary(df)
+
+sprintf('3-month treasury bill: mean = %.3f; median = %.3f',mean(df$tbill),median(df$tbill))
+sprintf('1-year treasury bond: mean = %.3f; median = %.3f',mean(df$tbond),median(df$tbond))
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Exercise #2.
+
+Create a new data frame with a subset of the columns and rows. Make sure to rename it.
+
+```{r subset}
+
+```
+
+## Exercise #3.
+
+Create new column names for the new data frame.
+
+```{r column_names}
+
+
+```
+
+## Exercise #4.
+
+Use the summary function to create an overview of your new data frame. Then print the mean and median for the same two attributes. Please compare.
+
+```{r}
+
+```
+
+## Exercise #5.
+
+For at least 3 values in a column please rename so that every value in that column is renamed. For example, suppose I have 20 values of the letter “e” in one column. Rename those values so that all 20 would show as “excellent”.
+
+```{r}
+
+
+```
+
+## Exercise #6.
+
+Display enough rows to see examples of all of steps 1-5 above.
+
+```{r}
+
+```
+
