@@ -3,6 +3,8 @@ title: "R Bridge Week 2 Assignment"
 author: "Donald Butler"
 date: "7/30/2021"
 output:
+  html_document:
+    df_print: paged
   pdf_document: default
 ---
 
@@ -21,8 +23,6 @@ US Macroeconomic Data (1957–2005, Stock \& Watson)
 csvfile <- 'https://raw.githubusercontent.com/dab31415/SPS-Bridge-R/main/USMacroSW.csv'
 
 df <- read.csv(csvfile)
-df$year <- 1957 + floor((df[1]-1)/4)
-df$qtr <- ((df[1]-1) %% 4) + 1
 ```
 
 ## Exercise #1.
@@ -42,7 +42,8 @@ sprintf('1-year treasury bond: mean = %.3f; median = %.3f',mean(df$tbond),median
 Create a new data frame with a subset of the columns and rows. Make sure to rename it.
 
 ```{r subset}
-
+# select the first 50 rows, with columns x, unemp, tbill, and tbond
+my_df <- df[1:50,c(1:2,5:6)]
 ```
 
 ## Exercise #3.
@@ -50,8 +51,7 @@ Create a new data frame with a subset of the columns and rows. Make sure to rena
 Create new column names for the new data frame.
 
 ```{r column_names}
-
-
+names(my_df) <- c('index','unemployement_rate','3-month tbill rate','1-year bond rate')
 ```
 
 ## Exercise #4.
@@ -59,23 +59,33 @@ Create new column names for the new data frame.
 Use the summary function to create an overview of your new data frame. Then print the mean and median for the same two attributes. Please compare.
 
 ```{r}
+summary(my_df)
 
+sprintf('3-month treasury bill: mean = %.3f; median = %.3f',mean(my_df$`3-month tbill rate`),median(my_df$`3-month tbill rate`))
+sprintf('1-year treasury bond: mean = %.3f; median = %.3f',mean(my_df$`1-year bond rate`),median(my_df$`1-year bond rate`))
 ```
+Interest rates for treasury bills and treasury bonds were lower in the first 50 quarters when compared with the original dataset.
 
 ## Exercise #5.
 
 For at least 3 values in a column please rename so that every value in that column is renamed. For example, suppose I have 20 values of the letter “e” in one column. Rename those values so that all 20 would show as “excellent”.
 
 ```{r}
-
+my_df$year <- 1957 + floor((my_df$index-1)/4)
+my_df$qtr[(my_df$index-1) %% 4 == 0] <- 'First'
+my_df$qtr[(my_df$index-1) %% 4 == 1] <- 'Second'
+my_df$qtr[(my_df$index-1) %% 4 == 2] <- 'Third'
+my_df$qtr[(my_df$index-1) %% 4 == 3] <- 'Fourth'
 
 ```
+
+The dataset I selected wasn't conducive to completing this exercise as written. I used similar selection techniques to populate a new column for quarter. I played around with a datetime field, but wasn't having much luck.
 
 ## Exercise #6.
 
 Display enough rows to see examples of all of steps 1-5 above.
 
 ```{r}
-
+head(my_df,15)
 ```
 
